@@ -1,5 +1,5 @@
 <?php
-
+// makes error message if user already exists
   $userError = $_GET['createAccount'];
 
   if ($userError == true){
@@ -13,7 +13,7 @@
 
 <html>
 <head>
-
+<!--adds external css and jQuery files to this php file-->
   <script src="jquery-2.1.4.min.js"></script>
 	<script src="jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="smoothness/jquery-ui.min.css">-
@@ -70,73 +70,71 @@
       function checkForm() {
             // Fetching values from all input fields and storing them in variables.
 
+            // Fetching values from all input fields and storing them in variables.
             var username = document.getElementById("userInput").value;
             var submit = document.getElementById("passInput").value;
             var resubmit = document.getElementById("passReInput").value;
             var email = document.getElementById("emailInput").value;
             var neddih = document.getElementById("neddih").value;
 
+		        // compare to email to check if email is in the correct format
             var emailFormat = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+		        // compare to username or password to check if it contains whitespace
             var whiteSpace = /\s/;
 
 
-            //Check input Fields Should not be blanks.
+            //Check if input Fields are blank.
             if (username == '' || submit == '' || resubmit == ''|| email == '') {
                 alert("Fill All Fields");
                 return false;
             }
-            else if (neddih != '') {
+            else if (neddih != '') { // checks if hidden input form has been filled in
                 alert("Error");
                 return false;
             }
             else {
-              if (whiteSpace.test(username) || whiteSpace.test(submit) || whiteSpace.test(email) ){
+
+              if (whiteSpace.test(username) || whiteSpace.test(submit) || whiteSpace.test(email) ){ // checks if username or password contain white space
                   alert("There must not be any spaces in your input e.g.\nCorrect: JohnSmith\nIncorrect: John Smith");
                   return false;
               }
-              else if (username.length < 3){
+              else if (username.length < 3){ //checks if username is longer than 3 chars
                   alert("Username must be more than 3 characters e.g.\nCorrect: JohnSmith\nIncorrect: JS");
                   return false;
               }
-              else if (submit.length < 7){
+              else if (submit.length < 7){ // checks if password is less than 7 chars
                   alert("submit must be more than 7 characters e.g.\nCorrect: JohnSmith11\nIncorrect: JohnSmith");
                   return false;
               }
-              else if(!submit.match(/[a-z]/g))  {
-                  alert("Password must include a lower case letter, upper case letter and a number e.g.\nCorrect: JohnSmith11\nIncorrect: JOHNSMITH11");
+              else if(!submit.match(/[a-z]/g))  { // checks if password doesn’t contain a lower case letter
+                  alert("Password must include a lower case letter and a upper case letter e.g.\nCorrect: JohnSmith11\nIncorrect: JOHNSMITH11");
                   return false;
               }
-              else if(!submit.match(/[A-Z]/g))  {
-                  alert("Password must include a lower case letter, upper case letter and a number e.g.\nCorrect: JohnSmith11\nIncorrect: JOHNSMITH11");
+              else if(!submit.match(/[A-Z]/g))  { // checks if password doesn’t include a upper case letter
+                  alert("Password must include a lower case letter and a upper case letter e.g.\nCorrect: JohnSmith11\nIncorrect: JOHNSMITH11");
                   return false;
               }
-              else if (submit != resubmit) {
+              else if (submit != resubmit) { // checks if both passwords are the same
                 alert("Passwords must be the same e.g.\nIf your password = SmithJohn, \nyour retyped password = SmithJohn");
                 return false;
               }
-              else if (!emailFormat.test(email)){
+              else if (!emailFormat.test(email)){ // checks if email format is correct
                 alert("Email input is incorrect");
                 return false;
               }
               else {
-                  //Notifying error fields
-                  var userInput = document.getElementById("user");
-                  var passInput = document.getElementById("pass");
-                  var passReInput = document.getElementById("passRe");
-                  var emailInput = document.getElementById("email");
                   return true;
               }
           }
         }
 
-        //-- Jeff -------------------------------------------------//
-        function questionButton() {
-          $("#popInfo").dialog({
-			         modal:true,
-			         resizable: false
-			    });
-        }
-        //---------------------------------------------------------//
+        // loads pop up window when question button is pressed
+              function questionButton() {
+                $("#popInfo").dialog({
+      			         modal:true,
+      			         resizable: false
+      			    });
+              }
 
       </script>
 
@@ -144,16 +142,16 @@
 
 <body>
 
-  <!-- Jeff ------------------------------------------------->
   <div id="popInfo" title="Information" style="display:none;">
-    <p>Username and password most contain more than 3 characters e.g. JohnSmith and SmithJohn<br>Your Password must match the re-typed password<br>You must enter your email in the correct format e.g. JohnSmith@outlook.com</p>
+	<!-- message displayed in pop up box -->
+    <p>Username must contain more than 3 characters.<br> Your password must contain an upper case letter, a lower case letter, a special character and no white space e.g. JohnSmith1! and SmithJohn8*<br>Your Password must match the re-typed password<br>You must enter your email in the correct format e.g. JohnSmith@outlook.com</p>
   </div>
-  <!--------------------------------------------------------->
 
   <heading>Infrastructure As A Management Tool</heading>
 
   <whiteBox></whiteBox>
 
+	<!-- question mark button -->
   <button onclick="return questionButton();">❔</button>
 
 
@@ -163,7 +161,9 @@
     <form autocomplete="off" style="padding-top: 90px; padding-bottom: 10px; text-align: left;" action="checkusers.php">
 
       <div style="padding:0px 20px;">
+	<!-- hidden form -->
         <input value="" type="hidden" id="neddih" name="neddih">
+
         <br>Username<br>
         <input value="" type="text" id="userInput" name="username" style="width: 100%; padding: 12px 20px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; box-sizing: border-box;">
         <div id='user'></div>
@@ -180,8 +180,9 @@
         Already have an account? <a href="login.php">Log in</a><br>
       </div>
 
+	     <!-- displays error message -->
       <formBoxError><?=$userError?></formBoxError>
-
+      <!-- submits form if username, password and email are entered correctly-->
       <br><input class="button" type="reset" value="Reset"><input class="button" type="submit" value="Submit" onclick="return checkForm();">
 
     </form>

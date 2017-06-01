@@ -1,12 +1,12 @@
 <?php
-  session_start();
+  session_save_path("/tmp");
   $userError = $_SESSION['userError'];
   $userDisplay = $_SESSION['loggedin'];
 
-  if ($userDisplay == "") {
+  /*if ($userDisplay == "") {
     header("Location: login.php");
     $_SESSION['illegalAccess'] = true;
-  }
+  }*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -43,73 +43,110 @@
 
     <script>
 
-        function checkForm() {
+    function checkForm() {
 
-            // Fetching values from all input fields and storing them in variables.
+        // Fetching values from all input fields and storing them in variables.
+        var service = document.getElementById("service").value;
+        var ram = document.getElementById("ram").value;
+        var ssd = document.getElementById("ssd").value;
+        var servers = document.getElementById("servers").value;
+        var vm = document.getElementById("vm").value;
+        var cpu = document.getElementById("cpu").value;
+        var p1 = document.getElementById("p1").value;
+        var p2 = document.getElementById("p2").value;
+        var p3 = document.getElementById("p3").value;
+        var p4 = document.getElementById("p4").value;
+        var p5 = document.getElementById("p5").value;
+        var p6 = document.getElementById("p6").value;
+        var p7 = document.getElementById("p7").value;
+        var p8 = document.getElementById("p8").value;
+        var p9 = document.getElementById("p9").value;
+        var p10 = document.getElementById("p10").value;
+        var p11 = document.getElementById("p11").value;
+        var p12 = document.getElementById("p12").value;
+        var p13 = document.getElementById("p13").value;
+        var p14 = document.getElementById("p14").value;
+        var p15 = document.getElementById("p15").value;
+        var p16 = document.getElementById("p16").value;
+        var p17 = document.getElementById("p17").value;
+        var p18 = document.getElementById("p18").value;
+        var p19 = document.getElementById("p19").value;
+        var p20 = document.getElementById("p20").value;
+        var p21 = document.getElementById("p21").value;
 
-            var service = document.getElementById("service1").value;
-            var ram = document.getElementById("ram1").value;
-            var ssd = document.getElementById("ssd1").value;
-            //var packages = document.getElementById("packages1").value;
-            var servers = document.getElementById("servers1").value;
-            var vm = document.getElementById("vm1").value;
-            var cpu = document.getElementById("cpu1").value;
+          // calculate the cost of the infrastructure inputted
+          var cost = 0;
 
-            var service1;
-            var ram1;
-            var ssd1;
-            //var packages1;
-            var servers1;
-            var vm1;
-            var cpu1;
+          cost += Number(ram);
+          cost += Number(ssd);
+          cost += Number(servers);
+          cost += Number(vm);
+          cost += Number(cpu);
 
-            //Check input Fields Should not be blanks.
-            if (service == "0") {
-                alert("Please select your service");
+          //package costs
+          if ($('input[name="p1"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p2"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p3"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p4"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p5"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p6"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p7"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p8"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p9"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p10"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p11"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p12"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p13"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p14"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p15"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p16"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p17"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p18"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p19"]').is(':checked'))
+            cost += 1;
+           ($('input[name="p20"]').is(':checked'))
+            cost += 1;
+          if ($('input[name="p21"]').is(':checked'))
+            cost += 1;
+
+            alert("Infrastructure has been created");
+
+            return true;
+
+            /*var confirm = confirm("The infrastructure configuration will cost you: \n\n" + cost + "/per month.\n Do you accept?");
+            if (confirm == true) {
+              document.getElementById("hidden").value = cost;
+              return true;
+            } else {
                 return false;
-            }
-            else {
-                //checking error fields
-                service1 = document.getElementById("service");
-                ram1 = document.getElementById("ram");
-                ssd1 = document.getElementById("ssd");
-                //packages1 = document.getElementById("packages");
-                servers1 = document.getElementById("servers");
-                vm1 = document.getElementById("vm");
-                cpu1 = document.getElementById("cpu");
+            }*/
 
-                /*service = Number(service);
-                ram = Number(ram);
-                ssd = Number(ssd);
-                packages = Number(packages);
-                servers = Number(servers);
-                vm = Number(vm);
-                var cost = (service + ram + ssd + packages + servers + vm);
-
-                */
-                alert("The infrastructure configuration will cost you: \n\n/per month");
-
-
-                return true;
-            }
-        }
+    }
 
 
           $(document).ready(function(){
 
-            $("#submitIt").hide();
-
             $("#bttnOne").click(function(){
 
-              var value = document.getElementById("service1").value;
-              var test = true;
-
-              if (value == "Data Science" || value == "Software Developer" || value == "IT Security" || value == "Mobile App Developer"){
-                $("#submitIt").show();
-              }
-              else {
-                alert("You must select a service");
-              }
+              var value = document.getElementById("service").value;
 
               if (value == "Software Developer"){
                 $('input[name=p2]').prop('checked', true); // python
@@ -218,6 +255,8 @@
 </head>
 <body>
 
+
+
   <!-- Menu -->
     <div class="dropdown">
       <div class="dropbtn" style="font-family: 'Times New Roman', Times, serif; font-size:19px;">Menu</div>
@@ -231,6 +270,7 @@
   <heading>Infrastructure As A Management Tool</heading>
   <welcome>Welcome <?= $userDisplay ?></welcome>
 
+
   <whiteBox>
 
     <formBox>
@@ -242,63 +282,62 @@
           <tr>
             <td>
               <p>Select Service Type:</p>
-              <select name="service" id="service1">
-                <option value="0">-</option>
+              <select name="service" id="service">
+                <option value="No service selected">-</option>
                 <option value="Data Science">Data Science</option>
                 <option value="Software Developer">Software Developer</option>
                 <option value="IT Security">IT Security</option>
                 <option value="Mobile App Developer">Mobile App Developer</option>
-              </select>
-              <div id='service'></div><br>
+              </select><br><br>
               <input type="button" class="submitBttn" value='Submit' id="bttnOne">
             </td>
           </tr>
           <tr>
               <td>
                 <p>Adjust amount of Allocated RAM:<p>
-                <select name="ram" id="ram1">
-                  <option value="8">8GB</option>
-                  <option value="16" selected>16GB</option>
+                <select name="ram" id="ram">
+                  <option value="45">8GB</option>
+                  <option value="100" selected>16GB</option>
                 </select>
-                <div id='ram'></div>
               </td>
           </tr>
           <tr>
               <td>
                 <p>Type required amount of SSD memory in GB:</p>
-                <input id ="ssd1" type="number" name="ssd" min="100" max="1000" step="100" value="100">
+                <input id ="ssd" type="number" name="ssd" min="100" max="1000" step="100" value="100">
               </td>
           </tr>
           <tr>
             <td>
               <table>
+                <input type="text" id="hidden" name="hidden" hidden="true">
                 <p>Select Software Packages</p>
                 <tr>
 
                   <td>
-                    <input type="checkbox" name="p1" id="pOne" value="R" checked>R<br>
-                    <input type="checkbox" name="p2" value="Python" checked>Python<br>
-                    <input type="checkbox" name="p3" value="SQL Server" checked>SQL Server<br>
-                    <input type="checkbox" name="p4" value="git" checked>git<br>
-                    <input type="checkbox" name="p5" value="PHP" checked>PHP<br>
-                    <input type="checkbox" name="p6" value="Okta" checked>Okta<br>
-                    <input type="checkbox" name="p7" value="Zscaler" checked>Zscaler<br>
-                    <input type="checkbox" name="p8" value="ClipherCloud" checked>ClipherCloud<br>
-                    <input type="checkbox" name="p9" value="IOS SDK" checked>IOS SDK<br>
-                    <input type="checkbox" name="p10" value="Andriod SDK" checked>Andriod SDK<br>
-                    <input type="checkbox" name="p11" value="Xamarin" checked>Xamarin<br>
+                    <input type="checkbox" name="p1" id="p1" value="R" checked>R<br>
+                    <input type="checkbox" name="p2" id="p2" value="Python" checked>Python<br>
+                    <input type="checkbox" name="p3" id="p3" value="SQL Server" checked>SQL Server<br>
+                    <input type="checkbox" name="p4" id="p4" value="git" checked>git<br>
+                    <input type="checkbox" name="p5" id="p5" value="PHP" checked>PHP<br>
+                    <input type="checkbox" name="p6" id="p6" value="Okta" checked>Okta<br>
+                    <input type="checkbox" name="p7" id="p7" value="Zscaler" checked>Zscaler<br>
+                    <input type="checkbox" name="p8" id="p8" value="ClipherCloud" checked>ClipherCloud<br>
+                    <input type="checkbox" name="p9" id="p9" value="IOS SDK" checked>IOS SDK<br>
+                    <input type="checkbox" name="p10" id="p10" value="Andriod SDK" checked>Andriod SDK<br>
+                    <input type="checkbox" name="p11" id="p11" value="Xamarin" checked>Xamarin<br>
                   </td>
                   <td>
-                    <input type="checkbox" name="p12" value="Weka" checked>Weka<br>
-                    <input type="checkbox" name="p13" value="Apache Drill" checked>Apache Drill<br>
-                    <input type="checkbox" name="p14" value="Ruby" checked>Ruby<br>
-                    <input type="checkbox" name="p15" value=".NET" checked>.NET<br>
-                    <input type="checkbox" name="p16" value="IOS" checked>IOS<br>
-                    <input type="checkbox" name="p17" value="DocTrackr" checked>DocTrackr<br>
-                    <input type="checkbox" name="p18" value="Centrify" checked>Centrify<br>
-                    <input type="checkbox" name="p19" value="Vaultive" checked>Vaultive<br>
-                    <input type="checkbox" name="p20" value="React Native" checked>React Native<br>
-                    <input type="checkbox" name="p21" value="Unity" checked>Unity<br>
+                    <input type="checkbox" name="p12" id="p12" value="Weka" checked>Weka<br>
+                    <input type="checkbox" name="p13" id="p13" value="Apache Drill" checked>Apache Drill<br>
+                    <input type="checkbox" name="p14" id="p14" value="Ruby" checked>Ruby<br>
+                    <input type="checkbox" name="p15" id="p15" value=".NET" checked>.NET<br>
+                    <input type="checkbox" name="p16" id="p16" value="IOS" checked>IOS<br>
+                    <input type="checkbox" name="p17" id="p17" value="DocTrackr" checked>DocTrackr<br>
+                    <input type="checkbox" name="p18" id="p18" value="Centrify" checked>Centrify<br>
+                    <input type="checkbox" name="p19" id="p19" value="Vaultive" checked>Vaultive<br>
+                    <input type="checkbox" name="p20" id="p20" value="React Native" checked>React Native<br>
+                    <input type="checkbox" name="p21" id="p21" value="Unity" checked>Unity<br>
                 <br></td>
               </tr>
 
@@ -308,39 +347,35 @@
           <tr>
               <td>
                 <p>Select of No of Servers:<p>
-                <select name="servers" id="servers1">
-                  <option value="2" selected>2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
+                <select name="servers" id="servers">
+                  <option value="10" selected>2</option>
+                  <option value="15">3</option>
+                  <option value="22">4</option>
+                  <option value="30">5</option>
+                  <option value="37">6</option>
                 </select>
-                <div id='servers'></div>
               </td>
           </tr>
           <tr>
               <td>
                 <p>Adjust No of Virtual Machines:<p>
-                <select name="vm" id="vm1">
-                  <option value="2" selected>2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
+                <select name="vm" id="vm">
+                  <option value="4" selected>2</option>
+                  <option value="6">3</option>
+                  <option value="8">4</option>
+                  <option value="10">5</option>
+                  <option value="12">6</option>
                 </select>
-                <div id='vm'></div>
               </td>
           </tr>
           <tr>
               <td>
-                <p>Adjust No of CPU's:<p>
-                <select name="cpu" id="cpu1">
-
-                  <option value="3">i3</option>
-                  <option value="5">i5</option>
-                  <option value="7">i7</option>
+                <p>CPU:<p>
+                <select name="cpu" id="cpu">
+                  <option value="67">i3</option>
+                  <option value="103" selected>i5</option>
+                  <option value="139">i7</option>
                 </select>
-                <div id='cpu'></div>
               </td>
           </tr>
         </table>

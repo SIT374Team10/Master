@@ -1,6 +1,6 @@
 <?php
 
-    session_start();
+    session_save_path("/Project2/tmp");
 
     $_SESSION['loggedin'] = "";
 

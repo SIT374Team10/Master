@@ -1,6 +1,9 @@
 <?php
+    session_save_path("/tmp");
 
-    session_start();
+	// gets cost, username and selected infrastructure
+    $cost = $_GET['hidden'];
+	$username = $_GET['loggedin'];
 
     $One = $_GET['service'];
     $Two = $_GET['ram'];
@@ -29,12 +32,14 @@
     $p20 = $_GET['p20'];
     $p21 = $_GET['p21'];
 
+
     $Five = $_GET['servers'];
     $Six = $_GET['vm'];
     $Seven = $_GET['cpu'];
 
-    $dbuser = "jlicha";
-    $dbpass = "1Nt3rc3ptor";
+	// connects to database
+    $dbuser = "dgbr";
+    $dbpass = "ilovecows";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -43,14 +48,15 @@
         exit;
     }
 
-    $sqlTwo = "SELECT MAX(ID) FROM infrastructure";
+	// finds most recent infrastructure of this user
+  $sqlTwo = "SELECT MAX(ID) FROM infrastructure";
 
-    $stmtTwo = oci_parse($connect, $sqlTwo);
+  $stmtTwo = oci_parse($connect, $sqlTwo);
 
-    if(!$stmtTwo)  {
-      echo "An error occurred in parsing the sql string.\n";
-      exit;
-    }
+  if(!$stmtTwo)  {
+    echo "An error occurred in parsing the sql string.\n";
+    exit;
+  }
 
     oci_execute($stmtTwo);
 
@@ -61,9 +67,12 @@
 
     oci_close($connect);
 
+////////////////////////////////////////////////////////////////////////////
+
     $current = $_SESSION['currentID'];
 
-    ////////////////////////////////////////////////////////////////////////////
+	// checks if getting ID was successful or not
+    if ($current != ""){
 
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -72,8 +81,9 @@
         exit;
     }
 
-    /*Add this later PACKAGES = '{$Four}',*/
+	// updates the current infrastructure
     $sqlTwo = "UPDATE infrastructure SET
+    COST = '{$cost}',
     SERVICE = '{$One}',
     RAM = '{$Two}', SSD = '{$Three}',
     PACKAGEONE = '{$p1}',
@@ -96,7 +106,7 @@
     PACKAGEEIGHTTEEN = '{$p18}',
     PACKAGENINETEEN = '{$p19}',
     PACKAGETWENTY = '{$p20}',
-    PACKAGETWENTYONE = '{$p21}', 
+    PACKAGETWENTYONE = '{$p21}',
     SERVERS = '{$Five}',
     VM = '{$Six}',
     CPU='{$Seven}'
@@ -111,8 +121,12 @@
 
     oci_execute($stmtTwo);
 
+	// directs user to monitoring page
     header('location: monitoringPage.php?');
-
-    oci_close($connect);
+  }
+  else {
+    header('location: monitoringPage.php?');
+  }
+  oci_close($connect);
 
 ?>

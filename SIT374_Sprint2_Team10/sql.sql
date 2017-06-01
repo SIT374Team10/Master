@@ -1,24 +1,8 @@
-drop table fake;
-
-create table fake
-(ID NVARCHAR2(5) NOT NULL,
-RETAILER NVARCHAR2(20) NOT NULL,
-PRIMARY KEY (ID));
-
-
-insert into fake values('111', 'Dan Murphys');
-insert into fake values('222', 'Woolworths');
-insert into fake values('333', 'Safeway');
-insert into fake values('444', 'Foodworks');
-insert into fake values('555', 'Bilo');
-
-+==============================================================================+
-
 drop table users;
 
 create table users
 (USERNAME NVARCHAR2(20) NOT NULL,
-SUBMIT NVARCHAR2(40) NOT NULL,
+SUBMIT NVARCHAR2(64) NOT NULL,
 EMAIL NVARCHAR2(20) NOT NULL,
 PRIMARY KEY (USERNAME));
 
@@ -26,7 +10,7 @@ insert into users values('Demi', 'Brauer', 'demi@html.com');
 insert into users values('Cameron', 'Macfarlane', 'cameron@html.com');
 insert into users values('craig', 'p0werp01nt', 'craig@html.com');
 
-+==============================================================================+
+COMMIT;
 
 drop table infrastructure;
 drop SEQUENCE SEQUENCE_ID;
@@ -35,6 +19,7 @@ CREATE SEQUENCE SEQUENCE_ID START WITH 1 INCREMENT BY 1;
 
 create table infrastructure
 (ID NUMBER (20) NOT NULL,
+COST NVARCHAR2(20),
 USERNAME NVARCHAR2(20) NOT NULL,
 SERVICE NVARCHAR2(20) NOT NULL,
 RAM NVARCHAR2(20) NOT NULL,
@@ -65,4 +50,6 @@ VM NVARCHAR2(20) NOT NULL,
 CPU NVARCHAR2(20) NOT NULL,
 PRIMARY KEY (ID));
 
-insert into infrastructure values(SEQUENCE_ID.nextval, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22', '23', '24');
+insert into infrastructure values(SEQUENCE_ID.nextval,'30.0', '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22', '23', '24');
+
+COMMIT;
