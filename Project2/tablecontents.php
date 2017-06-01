@@ -1,8 +1,8 @@
 <?php
 
     function showTable() {
-        $dbuser = "dgbr"; /* your deakin login */
-        $dbpass = "ilovecows"; /* your oracle access password */
+        $dbuser = "jlicha"; /* your deakin login */
+        $dbpass = "1Nt3rc3ptor"; /* your oracle access password */
         $dbname = "SSID";
         $db = oci_connect($dbuser, $dbpass, $dbname);
 

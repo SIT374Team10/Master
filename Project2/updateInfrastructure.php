@@ -33,8 +33,8 @@
     $Six = $_GET['vm'];
     $Seven = $_GET['cpu'];
 
-    $dbuser = "dgbr";
-    $dbpass = "ilovecows";
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 

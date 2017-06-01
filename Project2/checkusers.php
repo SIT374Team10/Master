@@ -7,8 +7,8 @@
     $submit = $_GET['submit'];
     $email = $_GET['email'];
 
-    $dbuser = "dgbr";
-    $dbpass = "ilovecows";
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -17,7 +17,7 @@
         exit;
     }
 
-    $sql = "SELECT * FROM users WHERE lower(username) LIKE lower('%$username%') OR lower(email) LIKE lower('%$email%')";
+    $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
 
     $stmt = oci_parse($connect, $sql);
 

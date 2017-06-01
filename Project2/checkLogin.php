@@ -3,10 +3,10 @@
     session_start();
 
     $username = $_GET['username'];
-    $submit =   $_SESSION['hased'];
+    $submit = $_GET['submit'];
 
-    $dbuser = "dgbr";
-    $dbpass = "ilovecows";
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -15,7 +15,7 @@
         exit;
     }
 
-    $sql = "SELECT * FROM users WHERE lower(username) LIKE lower('%$username%') AND lower(submit) LIKE lower('%$submit%')";
+    $sql = "SELECT * FROM users WHERE username = '$username' AND submit = '$submit'";
 
     $stmt = oci_parse($connect, $sql);
 
@@ -32,6 +32,7 @@
     header('location: monitoringPage.php');
 	}
   else {
+    $_SESSION['loggedin'] = "";
     header('location: login.php?login=false');
   }
 

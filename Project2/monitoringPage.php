@@ -2,14 +2,15 @@
   session_start();
   $userError = $_SESSION['userError'];
   $userDisplay = $_SESSION['loggedin'];
+  $errorNewPassword = $_SESSION['errorNewPassword'];
 
   if ($userDisplay == "") {
     header("Location: login.php");
     $_SESSION['illegalAccess'] = true;
   }
 
-    $dbuser = "dgbr";
-    $dbpass = "ilovecows";
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -144,6 +145,16 @@
        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     }
 
+    exitButton {
+      position: fixed;
+      background-color: lightblue;
+      z-index: 9999999999999;
+      width: 10px;
+      height: 10px;
+      top:5px;
+      right:5px;
+    }
+
   </style>
 
 
@@ -266,29 +277,24 @@
       });
 
       $("#bttnTwo").click(function(){
-        $("body").append('<changePassword style="padding-top:50px;" id="change"><div style="margin-left:50px;font-size: 20px; padding-top:15px; width:100%;">Change Password</div><br><input style="margin-left:50px; width: 300px;" type="text" id="old" placeholder="Enter old password"><input style="margin-left:50px; width: 300px; margin-top:10px;" type="text" id="new" placeholder="Enter your new password"><input style="margin-left:50px; width: 300px; margin-top:10px;" type="text" id="newTwo" placeholder="Reenter your new password"><br><input style="margin-top:20px;" type="button" class="submitBttnTwo" value="Submit" id="bttnThree"></changePassword>');
+        $("body").append('<form method="get" action="checkNewPassword.php" action="checkNewPassword.php"><changePassword style="padding-top:50px;" id="change"><div style="margin-left:50px;font-size: 20px; padding-top:15px; width:100%;">Change Password</div><br><input type="text" id="user" name="user" value="<?php echo $userDisplay; ?>" hidden="true"><input style="margin-left:50px; width: 300px;" type="text" id="old" name="old" placeholder="Enter old password"><input style="margin-left:50px; width: 300px; margin-top:10px;" type="text" id="new" name = "new" placeholder="Enter your new password"><input style="margin-left:50px; width: 300px; margin-top:10px;" type="text" id="newTwo" name="newTwo" placeholder="Re-enter your new password"><input action="updateInfrastructure.php" style="margin-top:20px;" type="submit" class="submitBttnTwo" value="Submit" id="bttnThree"><input type="button" class="submitBttnThree" value="Exit" id="bttnFour"><br><br><br></changePassword></form>');
+
         $("#bttnThree").click(function(){
-
-
           var old = document.getElementById("old").value;
           var newOne = document.getElementById("new").value;
           var newTwo = document.getElementById("newTwo").value;
-
-          var old1;
-          var newOne1;
-          var newTwo1;
+          var user = document.getElementById("user").value;
 
           if (old == "" || newOne == "" || newTwo == "") {
-              alert("All forms must be filled in");
+            alert("All forms must be filled in");
           }
-          else {
-              //checking error fields
-              old1 = document.getElementById("old").value;
-              newOne1 = document.getElementById("new").value;
-              newTwo1 = document.getElementById("newTwo").value;
-        }
+          else if (newOne != newTwo) {
+            alert("Your new password must match");
+          }
+        });
 
-        $( "body" ).load( "checkNewPassword.php" );
+        $("#bttnFour").click(function(){
+          $("#change").remove();
         });
       });
 
@@ -300,6 +306,9 @@
 </head>
 
 <body>
+
+  <input type="text" hidden="true" id="oldHidden" name="oldHidden">
+  <input type="text"  hidden="true" id="newHidden" name="newHidden">
 
   <!-- Menu -->
     <div class="dropdown">
@@ -443,6 +452,7 @@
       <!-- General ------------------------------------------------------------------------------------------>
 
       <div style="padding-left:30px; font-size: 20px;  padding-top:15px;">Current Iaas Configuration</div>
+
       <divider style="margin-left:20px; margin-top: 10px; width: 380px;"></divider>
 
       <table width="400px;">
@@ -476,8 +486,8 @@
 
       </table><br><br>
 
-      <input style="margin-left:20px;" type="button" class="submitBttn" value='Change Password' id="bttnTwo">
-
+      <input style="margin-left:20px;" type="button" class="submitBttn" value='Change Password' id="bttnTwo"><br>
+      <br><div style="margin-left:20px;"><?= $errorNewPassword ?><br></div>
       <br>
 
       <tableContainerTwo>

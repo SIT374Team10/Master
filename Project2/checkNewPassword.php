@@ -5,11 +5,11 @@
     $result = true;
 
     $submit = $_GET['old'];
-    $new = $_GET['newOne'];
-    $username = $_GET['username'];
+    $new = $_GET['new'];
+    $username = $_GET['user'];
 
-    $dbuser = "dgbr";
-    $dbpass = "ilovecows";
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -18,7 +18,7 @@
         exit;
     }
 
-    $sql = "SELECT submit FROM users WHERE lower(username) LIKE lower('%$username%') AND lower(submit) LIKE lower('%$submit%')";
+    $sql = "SELECT submit FROM users WHERE username ='$username' AND submit = '$submit'";
 
     $stmt = oci_parse($connect, $sql);
 
@@ -34,12 +34,11 @@
 	  }
     else {
       $result = false;
-      //header('location: monitoringPage.php');
     }
 
     if ($result == true){ // user does exist and password is correct
-      /*
-      $sql = "SELECT submit FROM users WHERE lower(username) LIKE lower('%$username%') AND lower(submit) LIKE lower('%$submit%')";
+
+      $sql = "UPDATE users SET submit = '$new' WHERE username = '$username'";
 
       $stmt = oci_parse($connect, $sql);
 
@@ -50,18 +49,13 @@
 
       oci_execute($stmt);
 
-      if (oci_fetch_array($stmt)) {
-        $result = true;
-  	  }
-      else {
-        $result = false;
-        //header('location: monitoringPage.php');
-      }*/
-
+      $_SESSION['errorNewPassword'] = "";
+      header('location: monitoringPage.php');
 
     }
     else {
-      // create alert
+      $_SESSION['errorNewPassword'] = "Username or password was incorrect";
+      header('location: monitoringPage.php');
     }
 
     oci_close($connect);

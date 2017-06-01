@@ -1,8 +1,8 @@
 <?php
-
-  session_save_path("/tmp");
+  session_start();
 
   $loginError = $_SESSION['illegalAccess'];
+
    $userError = $_GET['login'];
 
   if ($userError == true)
@@ -12,7 +12,8 @@
   else
     $userError = "";
 
-  $_SESSION['loggedin'] = "";
+    $_SESSION['loggedin'] = "";
+    $user = $_SESSION['loggedin'];
 ?>
 
 <html>
@@ -92,9 +93,6 @@
             }
             else {
                 //Notifying error fields
-                var userId = document.getElementById("username");
-                var subId = document.getElementById("submit");
-
                 return true;
             }
         }
@@ -105,6 +103,43 @@
 </head>
 
 <body>
+  <!--?php
+
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
+    $db = "SSID";
+    $connect = oci_connect($dbuser, $dbpass, $db);
+
+    if (!$connect) {
+        echo "An error occurred connecting to the database";
+        exit;
+    }
+
+    $sql = "SELECT * FROM users";
+
+    $stmt = oci_parse($connect, $sql);
+
+	  if(!$stmt)  {
+		  echo "An error occurred in parsing the sql string.\n";
+		  exit;
+    }
+
+  	oci_execute($stmt);
+
+    while (oci_fetch_array($stmt)) {
+      $id= oci_result($stmt,"USERNAME");
+      $orderdate = oci_result($stmt,"SUBMIT");
+      $orderdatea = oci_result($stmt,"EMAIL");
+      echo $id;
+      echo " ";
+      echo $orderdate;
+      echo " ";
+      echo $orderdatea;
+      echo '<br>';
+    }
+
+
+  ?>-->
 
   <!-- Section One -->
   <heading>Infrastructure As A Management Tool</heading>
