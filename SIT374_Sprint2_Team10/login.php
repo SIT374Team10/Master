@@ -1,5 +1,5 @@
 <?php
-  session_save_path("/tmp");
+  session_start();
 
 	// checks if user is logged in or not
   $loginError = $_SESSION['illegalAccess'];

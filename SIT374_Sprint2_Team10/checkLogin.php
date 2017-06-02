@@ -1,7 +1,7 @@
 <?php
 
     	//creates session
-    session_save_path("/tmp");
+    session_start();
 
 	// gets username and password.
     $username = $_GET['username'];

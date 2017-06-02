@@ -1,5 +1,5 @@
 <?php
-  session_save_path("/tmp");
+session_start();
   $userError = $_SESSION['userError'];
   $userDisplay = $_SESSION['loggedin'];
   $errorNewPassword = $_SESSION['errorNewPassword'];

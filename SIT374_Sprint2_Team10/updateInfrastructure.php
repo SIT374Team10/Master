@@ -1,5 +1,5 @@
 <?php
-    session_save_path("/tmp");
+    session_start();
 
 	// gets cost, username and selected infrastructure
     $cost = $_GET['hidden'];
