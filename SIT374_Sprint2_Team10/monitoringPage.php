@@ -11,8 +11,8 @@
   }*/
 
 	// connects to db
-    $dbuser = "dgbr";
-    $dbpass = "ilovecows";
+    $dbuser = "jlicha";
+    $dbpass = "1Nt3rc3ptor";
     $db = "SSID";
     $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -60,6 +60,10 @@
         echo "An error occurred connecting to the database";
         exit;
     }
+
+    if ($current != ""){
+
+      $userDisplay = /*$_SESSION['loggedin']*/ "Superman";
 
     $sqlTwo = "SELECT * FROM infrastructure WHERE ID = '{$current}' AND USERNAME = '{$userDisplay}'";
 
@@ -114,11 +118,16 @@
 
         $output = join('<br>', $array);
   	}
+  }
+  else {
+    $userError = "You cannot update a non-existing infrastructure";
+  }
+
 
     function deleteInfrastructure(){
 
-      $dbuser = "dgbr";
-      $dbpass = "ilovecows";
+      $dbuser = "jlicha";
+      $dbpass = "1Nt3rc3ptor";
       $db = "SSID";
       $connect = oci_connect($dbuser, $dbpass, $db);
 
@@ -285,16 +294,9 @@
           cost += 1;
 
           alert("Infrastructure has been updated");
+          document.getElementById("hidden").value = cost;
 
           return true;
-
-          /*var confirm = confirm("The infrastructure configuration will cost you: \n\n" + cost + "/per month.\n Do you accept?");
-          if (confirm == true) {
-            document.getElementById("hidden").value = cost;
-            return true;
-          } else {
-              return false;
-          }*/
 
   }
 
@@ -439,14 +441,10 @@
       });
 
       $("#bttnFive").click(function(){
-        //var confirm = confirm("Are you sure you'd like to delete the current infrastructure?");
-        //if (confirm == true) {
+
           alert("The current infrastructure is now deleted");
           $("body").load('deleteInfrastructure.php');
-        //}
-        //else {
-        //  alert("The current infrastructure was not deleted");
-        //}
+
 
       });
 
@@ -483,10 +481,16 @@
 
       <tableContainerOne>
 
+        <?php
+
+        if($service != "")
+        {
+          echo '
+
         <div style="padding-left:10px; font-size: 20px; padding-top:15px;">Update IaaS Configuration</div>
         <divider style="margin-right:20px; margin-top: 10px; width: 380px;"></divider>
 
-        <form method='get' name="config" id="config" style="padding-top: 20px;" action="updateInfrastructure.php">
+        <form method="get" name="config" id="config" style="padding-top: 15px;" action="updateInfrastructure.php">
           <table>
             <tr>
               <td>
@@ -498,8 +502,8 @@
                   <option value="IT Security">IT Security</option>
                   <option value="Mobile App Developer">Mobile App Developer</option>
                 </select>
-                <div id='service'></div><br>
-                <input type="button" class="submitBttn" value='Submit' id="bttnOne">
+                <div id="service"></div><br>
+                <input type="button" class="submitBttn" value="Submit" id="bttnOne">
               </td>
             </tr>
             <tr>
@@ -509,7 +513,7 @@
                     <option value="45">8GB</option>
                     <option value="100" selected>16GB</option>
                   </select>
-                  <div id='ram'></div>
+                  <div id="ram"></div>
                 </td>
             </tr>
             <tr>
@@ -521,7 +525,7 @@
             <tr>
               <td>
                 <table>
-                  <p style="padding-top:8px;">Select Software Packages:</p>
+                  <p >Select Software Packages:</p>
                   <tr>
 
                     <td>
@@ -556,7 +560,7 @@
       </tr>
             <tr>
                 <td>
-                  <p style="padding-top:8px;">Select No of Servers:<p>
+                  <p >Select No of Servers:<p>
                   <select name="servers" id="servers" class="inputFormAppearance">
                     <option value="10" selected>2</option>
                     <option value="15">3</option>
@@ -568,7 +572,7 @@
             </tr>
             <tr>
                 <td>
-                  <p style="padding-top:8px;">Adjust No of Virtual Machines:<p>
+                  <p >Adjust No of Virtual Machines:<p>
                   <select name="vm" id="vm" class="inputFormAppearance">
                     <option value="4" selected>2</option>
                     <option value="6">3</option>
@@ -580,16 +584,21 @@
             </tr>
             <tr>
                 <td>
-                  <p style="padding-top:8px;">CPU used:<p>
+                  <p>CPU used:<p>
                   <select name="cpu" id="cpu" class="inputFormAppearance">
-                    <option value="67">i3</option>
-                    <option value="103" selected>i5</option>
-                    <option value="139">i7</option>
+                    <option value="3">i3</option>
+                    <option value="5" selected>i5</option>
+                    <option value="7">i7</option>
                   </select>
                 </td>
             </tr>
           </table>
-          <input id="submitIt" class="submitBttn" type="submit" value='Submit' onclick="return checkForm();">
+
+          <input id="submitIt" class="submitBttn" type="submit" value="Submit" onclick="return checkForm();">';
+          }
+
+          ?>
+
           <input type="text" id="hidden" name="hidden" hidden="true">
         </form>
 
@@ -604,48 +613,67 @@
       <divider style="margin-left:20px; margin-top: 10px; width: 380px;"></divider>
 
       <table width="400px;">
-        <tr>
-          <td><div style="padding-left:30px; padding-top:15px;">Owner: </div></td>
-          <td><div id="one" style="padding-top:15px; text-align: right;"><?= $user ?></div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top:15px;">Service Type: </div></td>
-          <td><div id="one" style="padding-top:15px; text-align: right;"><?= $service ?></div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top:15px;">Cost of infrastructure: </div></td>
-          <td><div id="one" style="padding-top:15px; text-align: right;"><?= $cost ?></div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top: 10px;">Allocated RAM:</div></td>
-          <td><div id="two" style="padding-top:10px; text-align: right;"><?= $ram ?>GB</div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top: 10px;">SSD used:</div></td>
-          <td><div id="three" style="padding-top:10px; text-align: right;"><?= $ssd ?>GB</div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top: 10px;">No of Virtual Machines:</div></td>
-          <td><div id="five" style="padding-top:10px; text-align: right;"><?= $vm ?></div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top: 10px;">CPU used:</div></td>
-          <td><div id="six" style="padding-top:10px; text-align: right;">i<?= $cpu ?></div></td>
-        </tr>
-        <tr>
-          <td><div style="padding-left:30px; padding-top: 10px;">Software Packages:</div></td><br>
-        </tr>
-        <tr>
-          <td><div id="four" style="padding-top:10px;padding-left:30px; "><?= $output ?></div></td>
-        </tr>
+        <?php
 
+        if($service != "")
+        {
+          echo '
+          <tr>
+            <td><div style="padding-left:30px; padding-top:15px;">Owner: </div></td>
+            <td><div id="one" style="padding-top:15px; text-align: right;">'.$userDisplay.'</div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top:15px;">Service Type: </div></td>
+            <td><div id="one" style="padding-top:15px; text-align: right;">'.$service.'</div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top:15px;">Cost of infrastructure: </div></td>
+            <td><div id="one" style="padding-top:15px; text-align: right;">$'.$cost.' </div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top: 10px;">Allocated RAM:</div></td>
+            <td><div id="two" style="padding-top:10px; text-align: right;">'.$ram.' GB</div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top: 10px;">SSD used:</div></td>
+            <td><div id="three" style="padding-top:10px; text-align: right;">'.$ssd.'GB</div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top: 10px;">No of Virtual Machines:</div></td>
+            <td><div id="five" style="padding-top:10px; text-align: right;">'.$vm.' </div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top: 10px;">CPU used:</div></td>
+            <td><div id="six" style="padding-top:10px; text-align: right;">'.$cpu.'</div></td>
+          </tr>
+          <tr>
+            <td><div style="padding-left:30px; padding-top: 10px;">Software Packages:</div></td><br>
+          </tr>
+          <tr>
+            <td><div id="four" style="padding-top:10px;padding-left:30px; ">'.$output.'</div></td>
+          </tr>
+          </table>
 
-      </table>
-      <br><br>
-      <a href="getquote.php"><button style="margin-left:20px;" class="submitBttn" type="submit">Create New Infrastructure</button></a><br><br>
-      <input style="margin-left:20px;" type="button" class="submitBttn" value='Delete Current Infrastructure' id="bttnFive"><br><br>
-      <br><div style="margin-left:20px;"><?= $errorNewPassword ?><br></div>
-      <br>
+          <br>
+          <input style="margin-left:20px;" type="button" class="submitBttn" value="Delete Current Infrastructure" id="bttnFive"><br><br>
+        ';
+      }
+      else {
+          echo '
+          <tr>
+            <td><div style="padding-left:30px; padding-top:30px;">No Infrastructure has been created</div></td>
+          </tr>
+          </table>
+
+          <br>';
+        }
+
+        ?>
+
+        <a href="getquote.php"><button style="margin-left:20px;" class="submitBttn" type="submit">Create New Infrastructure</button></a><br><br>
+
+        <br><div style="margin-left:20px;"><?= $errorNewPassword ?><br></div>
+        <br>
 
       <tableContainerTwo>
 

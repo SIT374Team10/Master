@@ -128,17 +128,9 @@
             cost += 1;
 
             alert("Infrastructure has been created");
+            document.getElementById("hidden").value = cost;
 
             return true;
-
-            /*var confirm = confirm("The infrastructure configuration will cost you: \n\n" + cost + "/per month.\n Do you accept?");
-            if (confirm == true) {
-              document.getElementById("hidden").value = cost;
-              return true;
-            } else {
-                return false;
-            }*/
-
     }
 
 
